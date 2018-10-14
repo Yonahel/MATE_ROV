@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(mate_rov_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT " " STREQUAL " ")
+if(NOT "/home/yonahel/MATE_ROV/mate_ws/devel/include " STREQUAL " ")
   set(mate_rov_INCLUDE_DIRS "")
-  set(_include_dirs "")
+  set(_include_dirs "/home/yonahel/MATE_ROV/mate_ws/devel/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -109,7 +109,7 @@ if(NOT " " STREQUAL " ")
   endforeach()
 endif()
 
-set(libraries "")
+set(libraries "mate_rov")
 foreach(library ${libraries})
   # keep build configuration keywords, target names and absolute libraries as-is
   if("${library}" MATCHES "^(debug|optimized|general)$")
@@ -145,7 +145,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(mate_rov_EXPORTED_TARGETS "")
+set(mate_rov_EXPORTED_TARGETS "mate_rov_generate_messages_cpp;mate_rov_generate_messages_lisp;mate_rov_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${mate_rov_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -182,7 +182,7 @@ foreach(depend ${depends})
   list(APPEND mate_rov_EXPORTED_TARGETS ${${mate_rov_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "mate_rov-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${mate_rov_DIR}/${extra})
