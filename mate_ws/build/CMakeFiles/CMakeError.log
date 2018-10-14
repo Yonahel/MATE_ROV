@@ -1,0 +1,53 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec610905277/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec610905277.dir/build.make CMakeFiles/cmTryCompileExec610905277.dir/build
+make[1]: Entering directory `/home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec610905277.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec610905277.dir/CheckSymbolExists.c.o   -c /home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec610905277
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec610905277.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTryCompileExec610905277.dir/CheckSymbolExists.c.o  -o cmTryCompileExec610905277 -rdynamic 
+CMakeFiles/cmTryCompileExec610905277.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+make[1]: *** [cmTryCompileExec610905277] Error 1
+make[1]: Leaving directory `/home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec610905277/fast] Error 2
+
+File /home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2745166107/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2745166107.dir/build.make CMakeFiles/cmTryCompileExec2745166107.dir/build
+make[1]: Entering directory `/home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2745166107.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec2745166107.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.1/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec2745166107
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2745166107.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   CMakeFiles/cmTryCompileExec2745166107.dir/CheckFunctionExists.c.o  -o cmTryCompileExec2745166107 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[1]: *** [cmTryCompileExec2745166107] Error 1
+make[1]: Leaving directory `/home/yonahel/MATE_ROV/mate_ws/build/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec2745166107/fast] Error 2
+
+

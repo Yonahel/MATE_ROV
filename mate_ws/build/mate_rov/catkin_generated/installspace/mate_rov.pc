@@ -1,0 +1,8 @@
+prefix=/home/yonahel/MATE_ROV/mate_ws/install
+
+Name: mate_rov
+Description: Description of mate_rov
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/yonahel/MATE_ROV/mate_ws/install/lib 
+Requires: 
