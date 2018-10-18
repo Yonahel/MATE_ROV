@@ -2,6 +2,7 @@
 
 #include <Wire.h>
 
+//0x = hedadecimal formatter
 const int MPU_ADDRESS = 0x68;
 
 int16_t accelerometer_x, accelerometer_y, accelerometer_z;
@@ -62,3 +63,4 @@ void loop() {
  Serial.print(gyroscope_y);
  Serial.print(gyroscope_z);
  
+}
