@@ -1,8 +1,5 @@
-//@author LUIZ
-
 #include <Wire.h>
 
-//0x = hedadecimal formatter
 const int MPU_ADDRESS = 0x68;
 
 int16_t accelerometer_x, accelerometer_y, accelerometer_z;
@@ -37,8 +34,18 @@ void loop() {
 
  Wire.requestFrom(MPU_ADDRESS, 7*2, true);//Requets a total of 14 registers (2 for each of acceleration x, y and z, gyro x, y and z, and temperature)
 
-//Wire.read()<<8 | Wire.read() reads two registers at a time and stores them in the same variable
-//<<8 shifts the bites by 8 positions left and | copies a bit in each operand (fist 8 bits is one register and the last 8 bits are the second one)
+ readData();
+  
+ Serial.write(1);//Indicates to ROS that transmission will begin
+  
+ sendData();
+ 
+}
+
+void readData() {
+
+ //Wire.read()<<8 | Wire.read() reads two registers at a time and stores them in the same variable
+ //<<8 shifts the bites by 8 positions left and | copies a bit in each operand (fist 8 bits is one register and the last 8 bits are the second one)
  
  accelerometer_x = Wire.read()<<8 | Wire.read();//reads regitser 0x3B (ACCEL_XOUT_H) and 0x3C (ACCEL_XOUT_L)
 
@@ -53,14 +60,15 @@ void loop() {
  gyroscope_y = Wire.read()<<8 | Wire.read();//reads regitser 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
 
  gyroscope_x = Wire.read()<<8 | Wire.read();//reads regitser 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+}
 
- Serial.write(1);//Indicates to ROS that transmission will begin
-  
+void sendData() {
+
  Serial.print(accelerometer_x);
  Serial.print(accelerometer_y);
  Serial.print(accelerometer_z);
  Serial.print(gyroscope_x);
  Serial.print(gyroscope_y);
  Serial.print(gyroscope_z);
- 
+  
 }
