@@ -60,15 +60,16 @@ void readData() {
  gyroscope_y = Wire.read()<<8 | Wire.read();//reads regitser 0x45 (GYRO_YOUT_H) and 0x46 (GYRO_YOUT_L)
 
  gyroscope_x = Wire.read()<<8 | Wire.read();//reads regitser 0x47 (GYRO_ZOUT_H) and 0x48 (GYRO_ZOUT_L)
+  
 }
 
 void sendData() {
 
- Serial.print(accelerometer_x);
- Serial.print(accelerometer_y);
- Serial.print(accelerometer_z);
- Serial.print(gyroscope_x);
- Serial.print(gyroscope_y);
- Serial.print(gyroscope_z);
+ Serial.write(accelerometer_x);
+ Serial.write(accelerometer_y);
+ Serial.write(accelerometer_z);
+ Serial.write(gyroscope_x);
+ Serial.write(gyroscope_y);
+ Serial.write(gyroscope_z);
   
 }
