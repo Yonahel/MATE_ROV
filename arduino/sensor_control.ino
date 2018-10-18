@@ -28,7 +28,7 @@ void loop() {
 
  Wire.beginTransmission(MPU_ADDRESS);
  
- Wire.write(0x3B);//reqeusts to read the 0x3B register (ACCEL_XOUT_H)
+ Wire.write(0x3B);//requests to read the 0x3B register (ACCEL_XOUT_H)
  
  Wire.endTransmission(false);//Indicates that the Arduino will send a restart, so the connection is kept active
 
