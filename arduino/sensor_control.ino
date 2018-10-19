@@ -34,15 +34,15 @@ void loop() {
 
  Wire.requestFrom(MPU_ADDRESS, 7*2, true);//Requets a total of 14 registers (2 for each of acceleration x, y and z, gyro x, y and z, and temperature)
 
- readData();
+ readImuData();
   
  Serial.write(1);//Indicates to ROS that transmission will begin
   
- sendData();
+ sendImuData();
  
 }
 
-void readData() {
+void readImuData() {
 
  //Wire.read()<<8 | Wire.read() reads two registers at a time and stores them in the same variable
  //<<8 shifts the bites by 8 positions left and | copies a bit in each operand (fist 8 bits is one register and the last 8 bits are the second one)
@@ -63,7 +63,7 @@ void readData() {
   
 }
 
-void sendData() {
+void sendImuData() {
 
  Serial.write(accelerometer_x);
  Serial.write(accelerometer_y);
