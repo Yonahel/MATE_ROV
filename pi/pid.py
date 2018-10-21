@@ -1,9 +1,3 @@
-#TODO: Receive sensor data from Arduino
-#TODO: Pass sensor data to PID
-#TODO: Output motor data to different Pi
-
-#NOTE: Sensor data and motor data communication can be done outside here, and all of it is communicated via ROS (might work out better having a standalone PID controller, as it can run faster).
-
 import time
 
 class PID:
@@ -70,5 +64,5 @@ class PID:
             # Store time and error for the next update
             self.last_time = self.current_time
             self.last_error = error
-
+pi
             self.output = self.PTerm + (self.Ki * self.ITerm) + (self.Kd * self.DTerm)
