@@ -64,5 +64,4 @@ class PID:
             # Store time and error for the next update
             self.last_time = self.current_time
             self.last_error = error
-pi
             self.output = self.PTerm + (self.Ki * self.ITerm) + (self.Kd * self.DTerm)
