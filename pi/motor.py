@@ -87,13 +87,11 @@ def pidControl(sensor_r, sensor_y, sensor_p, rP, rI, rD, pP, pI, pD, yP, yI, yD,
     pitch_pid.setSampleTime(sampleTime)
     yaw_pid.setSampleTime(sampleTime)
 
-    while(True):
-        roll_pid.update(sensor_r)
-        pitch_pid.update(sensor_p)
-        yaw_pid.update(sensor_y)
-        preMove(roll_power = roll_pid.output, pitch_power = pitch_pid.output, yaw_pid = yaw_pid.output)
+    roll_pid.update(sensor_r)
+    pitch_pid.update(sensor_p)
+    yaw_pid.update(sensor_y)
+    preMove(roll_power = roll_pid.output, pitch_power = pitch_pid.output, yaw_pid = yaw_pid.output)
 
-    #TODO: add funcitonality to change setPoint while in loop
 
 
 def output():
