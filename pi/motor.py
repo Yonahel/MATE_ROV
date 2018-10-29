@@ -91,7 +91,7 @@ def pidControl(sensor_r, sensor_y, sensor_p, rP, rI, rD, pP, pI, pD, yP, yI, yD,
     roll_pid.update(sensor_r)
     pitch_pid.update(sensor_p)
     yaw_pid.update(sensor_y)
-    preMove(roll_power = roll_pid.output, pitch_power = pitch_pid.output, yaw_pid = yaw_pid.output)
+    preMove(roll_power = roll_pid.output, pitch_power = pitch_pid.output, yaw_power = yaw_pid.output)
 
 
 
