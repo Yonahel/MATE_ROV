@@ -75,14 +75,19 @@ def preMove(xy_power=0, xy_angle=0, z_power=0, roll_power=0, pitch_power=0, yaw_
     	motor[backLeft] = yaw_power
     	motor[backRight] = -yaw_power
 
-def pidControl(sensor_r, sensor_y, sensor_p, rP, rI, rD, pP, pI, pD, yP, yI, yD, setPoint=0.0, sampleTime=0.1):
-    roll_pid = PID(rP, rI, rD)
+def pidControl(sensor_r, sensor_p, sensor_y, rP, rI, rD, pP, pI, pD, yP, yI, yD, r_setPoint=0.0, p_setPoint=0.0, y_setPoint=0.0, sampleTime=0.1):
+	"""
+	Controls roll, pitch, and yaw of robot through a PID controller.
+
+	Needs to be run in a continuous while loop.
+	"""
+	roll_pid = PID(rP, rI, rD)
     pitch_pid = PID(pP, pI, pD)
     yaw_pid = PID(yP, yI, yD)
 
-    roll_pid.setPoint = setPoint
-    pitch_pid.setPoint = setPoint
-    yaw_pid.setPoint = setPoint
+    roll_pid.setPoint = r_setPoint
+    pitch_pid.setPoint = p_setPoint
+    yaw_pid.setPoint = y_setPoint
 
     roll_pid.setSampleTime(sampleTime)
     pitch_pid.setSampleTime(sampleTime)
