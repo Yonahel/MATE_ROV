@@ -1,104 +1,106 @@
-#TODO: Receive data from PID (done over ROS)
-#TODO: Initialize GPIO
-#TODO: Send data over TX/RX to Arduino
-#TODO: Receive sensor data from Arduino
+#Code for the MATE ROV motor control
+#This code receives motions from a joystick, converts them to ESC speed values, and sends them to an Arduino
+import serial
+import time
+
+port = 'dev/ttyACM0'
+motorSpeed = 0;
+
+arduino = serial.Serial(port,115200,timeout=25)
+
+while True:
+    #Joysticks will work as follows :
+    #Left joystick controls forward, back, right, left
+    #Right joystick controls up and down
+    #Turn around using right joystick sides
+    #No yaw pitch roll control for now
+
+    time.sleep(0.05) #Nick does it, so do I ;)
+
+    #Get value from joystick function here
+    leftJoystickX = #function
+    leftJoystickY = #function
+    rightJoystickX = #function
+    rightJoystickY = #functi`on
+
+    #Joystick values range from -1 to 1, ESC ranges from 1150 - 1500 (needs testing, as well as tweaking)
+    default = 1300
+    delta = 150         #Needs testing
 
 
-import math
-from pid import PID
-
-multiplier = 1
-motor = dict.fromkeys(["frontLeft", "frontRight", "backLeft", "backRight", "front", "back", "left", "right"], 0)
-
-
-def remoteControl(j1x, j1y, j2x, j2y, btnL1, btnL2, btnR1, btnR2):
-        # one joystick control
-        # 2 sticks (4 planes), 4 buttons, tentative mapping
-        # j prefixes refer to sticks with values -127 to 127, btn prefix refers to buttons for True or False.
-
-        # xy movement
-		motor[frontLeft] = j1y + j1x + j2x;
-		motor[frontRight] = j1y - j1x - j2x;
-		motor[backLeft] = j1y - j1x + j2x;
-		motor[backRight] = j1y + j1x - j2x;
-        if(btnL1): # pitch left
-                motor[left] = -127 * multiplier
-                motor[right] = 127 * multiplier
-                motor[front] = 0
-                motor[back] = 0
-        elif(btnR1): # pitch right
-                motor[left] = 127 * multiplier
-                motor[right] = -127 * multiplier
-                motor[front] = 0
-                motor[back] = 0
-        elif(btnL2): # dive
-                motor[front] = -127 * multiplier
-                motor[back] = -127 * multiplier
-                motor[left] = -127 * multiplier
-                motor[right] = -127 * multiplier
-        elif(btnR2): # rise
-                motor[front] = 127 * multiplier
-                motor[back] = 127 * multiplier
-                motor[left] = 127 * multiplier
-                motor[right] = 127 * multiplier
-        else: # roll forward/back using joystick
-            motor[front] = -j2y
-            motor[back] = j2y
-            motor[left] = 0
-            motor[right] = 0
-
-def preMove(xy_power=0, xy_angle=0, z_power=0, roll_power=0, pitch_power=0, yaw_power=0):
-    # handles [(xy_power, xy_angle) XOR (yaw)] OR/AND [(roll, pitch) XOR (z)] simultaneously
-    if(xy_power != 0):
-        x = math.sin(xy_angle) * xy_power;
-    	y = math.cos(xy_angle) * xy_power;
-    	motor[frontLeft] = y + x;
-    	motor[frontRight] = y - x;
-    	motor[backLeft] = y - x;
-    	motor[backRight] = y + x;
-
-    if(z != 0)
-        motor[front] = -z_power
-        motor[back] = -z_power
-        motor[left] = -z_power
-        motor[right] = -z_power
-
-    if(roll_power != 0 or pitch_power != 0):
-        motor[front] = -roll_power
-        motor[back] = roll_power
-        motor[left] = pitch_power
-        motor[right] = -pitch_power
-
-    if(yaw_power != 0)
-        motor[frontLeft] = yaw_power
-    	motor[frontRight] = -yaw_power
-    	motor[backLeft] = yaw_power
-    	motor[backRight] = -yaw_power
-
-def pidControl(sensor_r, sensor_p, sensor_y, rP, rI, rD, pP, pI, pD, yP, yI, yD, r_setPoint=0.0, p_setPoint=0.0, y_setPoint=0.0, sampleTime=0.1):
-	"""
-	Controls roll, pitch, and yaw of robot through a PID controller.
-
-	Needs to be run in a continuous while loop.
-	"""
-	roll_pid = PID(rP, rI, rD)
-    pitch_pid = PID(pP, pI, pD)
-    yaw_pid = PID(yP, yI, yD)
-
-    roll_pid.setPoint = r_setPoint
-    pitch_pid.setPoint = p_setPoint
-    yaw_pid.setPoint = y_setPoint
-
-    roll_pid.setSampleTime(sampleTime)
-    pitch_pid.setSampleTime(sampleTime)
-    yaw_pid.setSampleTime(sampleTime)
-
-    roll_pid.update(sensor_r)
-    pitch_pid.update(sensor_p)
-    yaw_pid.update(sensor_y)
-    preMove(roll_power = roll_pid.output, pitch_power = pitch_pid.output, yaw_power = yaw_pid.output)
+    i1speed = str(default)
+    i2speed = str(default)
+    i3speed = str(default)
+    i4speed = str(default)
+    o1speed = str(default)
+    o2speed = str(default)
+    o3speed = str(default)
+    o4speed = str(default)
 
 
-
-def output():
-    #TODO: send motor value to arduino [FL, FR, BL, BR, F, B, L, R] OVER TX/RX
+    #Left joystick left
+    if(leftJoystickX < 0)
+        #I1, I3 forward, I2, I4 reverse
+        i1speed = str(default +- (delta * leftJoystickX))
+        i2speed = str(default +- (delta * leftJoystickX))
+        i3speed = str(default +- (delta * leftJoystickX))
+        i4speed = str(default +- (delta * leftJoystickX))
+    #Left joystick right
+    elif(leftJoystickX > 0)
+        #I2, I4 forward, I1, I3 reverse
+        i1speed = str(default +- (delta * leftJoystickX))
+        i2speed = str(default +- (delta * leftJoystickX))
+        i3speed = str(default +- (delta * leftJoystickX))
+        i4speed = str(default +- (delta * leftJoystickX))
+    #Left joystick down
+    if(leftJoystickY < 0)
+        #I3, I4 forward, I1, I2 back
+        i1speed = str(default +- (delta * leftJoystickY))
+        i2speed = str(default +- (delta * leftJoystickY))
+        i3speed = str(default +- (delta * leftJoystickY))
+        i4speed = str(default +- (delta * leftJoystickY))
+    #Left joystick up
+    elif(leftJoystickY > 0)
+        #I1, I2 forward, I3, I4 back
+        i1speed = str(default +- (delta * leftJoystickY))
+        i2speed = str(default +- (delta * leftJoystickY))
+        i3speed = str(default +- (delta * leftJoystickY))
+        i4speed = str(default +- (delta * leftJoystickY))
+    #Right joystick down
+    if(rightJoystickY < 0)
+        #O1, O2, O3, O4 back
+        o1speed = str(default +- (delta * rightJoystickY))
+        o2speed = str(default +- (delta * rightJoystickY))
+        o3speed = str(default +- (delta * rightJoystickY))
+        o4speed = str(default +- (delta * rightJoystickY))
+    #Right joystick up
+    elif(rightJoystickY > 0)
+        #O1, O2, O3, O4 forward
+        o1speed = str(default +- (delta * rightJoystickY))
+        o2speed = str(default +- (delta * rightJoystickY))
+        o3speed = str(default +- (delta * rightJoystickY))
+        o4speed = str(default +- (delta * rightJoystickY))
+    #Right joystick left
+    if(rightJoystickX < 0)
+        #I* forward
+        i1speed = str(default +- (delta * rightJoystickX))
+        i2speed = str(default +- (delta * rightJoystickX))
+        i3speed = str(default +- (delta * rightJoystickX))
+        i4speed = str(default +- (delta * rightJoystickX))
+    #Right joystick right
+    elif(rightJoystickX > 0)
+        #I* back
+        i1speed = str(default +- (delta * rightJoystickX))
+        i2speed = str(default +- (delta * rightJoystickX))
+        i3speed = str(default +- (delta * rightJoystickX))
+        i4speed = str(default +- (delta * rightJoystickX))
+    
+    arduino.write(bytes("I1" + ' ' + i1speed + '\n','ASCII')) 
+    arduino.write(bytes("I2" + ' ' + i2speed + '\n','ASCII')) 
+    arduino.write(bytes("I3" + ' ' + i3speed + '\n','ASCII')) 
+    arduino.write(bytes("I4" + ' ' + i4speed + '\n','ASCII')) 
+    
+    arduino.write(bytes("O1" + ' ' + o1speed + '\n','ASCII')) 
+    arduino.write(bytes("O2" + ' ' + o2speed + '\n','ASCII')) 
+    arduino.write(bytes("O3" + ' ' + o3speed + '\n','ASCII')) 
+    arduino.write(bytes("O4" + ' ' + o4speed + '\n','ASCII')) 
