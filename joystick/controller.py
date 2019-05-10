@@ -17,5 +17,5 @@ while True:
     rightX = joy.get_axis(2);
     rightY = joy.get_axis(3);
 
-    #Send message (ROS or Serial, still deciding)
+    #Send message (ROS or IPC, still deciding)
 
