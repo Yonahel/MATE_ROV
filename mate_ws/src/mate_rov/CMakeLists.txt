@@ -53,8 +53,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
    FILES
-   imu.msg
-   motor.msg
+   Control.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -166,10 +165,10 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
    #scripts/my_python_script
-   scripts/motor/py
-   scripts/pid.py
-   scripts/sensor.py
-   scripts/server.py
+   scripts/motor.py
+   scripts/controller.py
+   scripts/data_client.py
+   scripts/data_server.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
