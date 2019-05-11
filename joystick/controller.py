@@ -18,12 +18,6 @@ pygame.joystick.init()
 joy = pygame.joystick.Joystick(0)
 joy.init()
 
-last_LX = 0
-last_LY = 0
-last_RX = 0
-last_RY = 0
-
-
 while True:
     #Required
     pygame.event.pump()
@@ -35,16 +29,4 @@ while True:
     rightY = joy.get_axis(3)
 
     #Send message (ROS or IPC, still deciding)
-    if( leftX != last_LX or
-        leftY != last_LY or
-        rightX != last_RX or
-        rightY != last_RY ):
-        print ("LEFT X " + str(leftX))
-        print ("LEFT Y " + str(leftY))
-        print ("RIGHT X " + str(rightX))
-        print ("RIGHT Y " + str(rightY))
     time.sleep(.2)   
-    last_LX = leftX
-    last_LY = leftY
-    last_RX = rightX
-    last_RY = rightY
